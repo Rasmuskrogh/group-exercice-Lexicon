@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./AddBook.css";
+import Button from "./Button";
 
 //To define the structure of a book object
 interface BookInterface {
@@ -84,12 +85,11 @@ export default function AddBook({
               id="genre"
             />
           </label>
-          <button
+          <Button
+            label="Add"
             className="add"
             onClick={() => setGenres([...genres, genreToAdd])} // Adding an additional genre
-          >
-            Add
-          </button>
+          />
         </section>
         <label className="isbn-field">
           ISBN:
@@ -113,14 +113,10 @@ export default function AddBook({
           />
         </label>
         <section className="buttons-field">
-          <button className="cancel" onClick={toggleAddView}>
-            {/* Exits the add new book interface window */}
-            Cancel
-          </button>
-          <button className="add" onClick={addBook}>
-            {/* Addes the new book to the Book list */}
-            Add
-          </button>
+          <Button className="cancel" onClick={toggleAddView} label="Cancel" />
+          {/* Exits the add new book interface window */}
+          <Button className="add" onClick={addBook} label="Add" />
+          {/* Addes the new book to the Book list */}
         </section>
       </form>
     </article>

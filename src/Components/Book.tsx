@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./Book.css";
+import Button from "./Button";
 
 //To define the structutre of a book object
 interface BookInterface {
@@ -13,10 +14,12 @@ interface BookInterface {
 //
 function Book({
   book, // Prop from App.tsx. The specific book to edit
-  updateBook, // Prop for App.tsx. Function for finding the specific book to edit
+  updateBook,
+  removeBook, // Prop for App.tsx. Function for finding the specific book to edit
 }: {
   book: BookInterface;
   updateBook: (updatedBook: BookInterface) => void;
+  removeBook: (isbn: number) => void;
 }) {
   //State to manage whether the book is in edit mode or not
   const [edit, setEdit] = useState<boolean>(false);
@@ -77,7 +80,10 @@ function Book({
               id="newRating"
             />
           </section>
-          <button onClick={handleEdit}>Confirm</button> {/* Confirms changes */}
+          <Button onClick={() => removeBook(book.isbn)} label="Remove" />
+          {/* Removes book */}
+          <Button onClick={handleEdit} label="Confirm" />
+          {/* Confirms changes */}
         </>
       ) : (
         //If edit is false show:
@@ -92,13 +98,12 @@ function Book({
             </p>
             <p>{stars}</p>
           </section>
-          <button
+          <Button
+            label="Edit"
             onClick={() => {
               setEdit(true); //Set the edit mode to true
             }}
-          >
-            Edit
-          </button>
+          />
         </>
       )}
     </article>

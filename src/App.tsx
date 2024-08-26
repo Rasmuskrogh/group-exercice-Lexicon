@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import Book from "./Components/Book";
 import AddBook from "./Components/AddBook";
+import Button from "./Components/Button";
 
 //To define the structutre of a book object
 interface BookInterface {
@@ -86,6 +87,11 @@ function App() {
     setBookList(updatedBookList);
   }
 
+  const removeFromBookList = (isbn: number) => {
+    const updateBookList = bookList.filter((book) => book.isbn !== isbn);
+    setBookList(updateBookList);
+  };
+
   //A function for adding additional books to the book list
   function addBookToBookList(bookToAdd: BookInterface) {
     setBookList([...bookList, bookToAdd]); //Adding a new book to the book list by using the spread operator on the kookList and adding a new book.
@@ -96,14 +102,14 @@ function App() {
     <>
       <header>
         <h1>My book collection</h1>
-        <button
+        <Button
           className="round-add-btn"
           onClick={() => {
             setshowAddBook(true); // setting the showAddBook to true, showing the add book interface
           }}
-        >
-          +
-        </button>
+          label="+"
+        />
+        +
       </header>
 
       <main>
@@ -111,7 +117,12 @@ function App() {
           {bookList.map(
             //Mapping throuh the list of books adding them to the DOM.
             (book, i) => (
-              <Book key={i} book={book} updateBook={updateBookList} /> //Passing the book property and the updateBookList function to the Book component
+              <Book
+                key={i}
+                book={book}
+                updateBook={updateBookList}
+                removeBook={removeFromBookList}
+              /> //Passing the book property and the updateBookList function to the Book component
             )
           )}
         </section>
